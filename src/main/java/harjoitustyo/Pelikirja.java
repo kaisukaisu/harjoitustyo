@@ -43,8 +43,12 @@ public class Pelikirja extends Application {
     //vboxilla asetellaan otsikko ja tekstikenttä päällekkäin
     VBox vBox = new VBox(arvaaTahan, textField);
 
+
+    Listatiedot listatiedot = new Listatiedot(1, "houseRollComeback", houseRollComeback);
+    String nimi = listatiedot.getNimi();
+
     //boolean-muuttuja vertailuun
-    boolean oikeinArvattu = arvaus.equals(getNimi());
+    boolean oikeinArvattu = arvaus.equals(nimi);
     //täällä meillä on taas periytymisongelma,
     // pitäiskö nää kaikki laittaa samaan luokkaan ettei tätä olis?
 
@@ -132,14 +136,25 @@ public class Pelikirja extends Application {
         primaryStage.setTitle("Arvaa peli");
         primaryStage.setScene(kehys);
         primaryStage.show();
+
+        textField.setOnAction(e -> {
+            String arvaus = textField.getText();
+            if (arvaus.equals(listatiedot.getNimi())) {
+                palaute.setText("Oikein!" + listatiedot.getNimi());
+                palaute.setTextFill(Color.GREEN);
+            } else {
+                palaute.setText("Väärin!" + listatiedot.getNimi());
+                palaute.setTextFill(Color.RED);
+            }
+        });
         
     }
 
     public boolean isOikeinArvattu() {
-        return oikeinArvattu;
-        palaute.setText(getNimi);
+        palaute.setText(listatiedot.getNimi());
         palaute.setTextFill(Color.GREEN);
         palaute.setStyle("-fx-font-size: 15px;"); // suurenna
+        return oikeinArvattu;
         //tallenna tulos tiedostoon myös tähän
         //joku rakenne millä katsotaan, onko lista käyty kokonaan läpi
         //jos on niin System.out.println(tiedosto);
