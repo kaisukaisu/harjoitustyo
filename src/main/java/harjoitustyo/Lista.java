@@ -5,6 +5,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Luokka sijoittaa kuvat linkitettyyn listaan
+ * listan iteroimisella varmistetaan, että kaikki kuvat on käyty läpi kerran
+ */
 public class Lista extends Application {
 
     Image houseRollComeback = new Image("C:\\Users\\kaisu\\harjoitustyo\\target\\house roll comeback.png");

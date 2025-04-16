@@ -1,6 +1,7 @@
 package harjoitustyo;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,9 +11,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.util.Random;
 
+/**
+ * Tässä luokassa on graafinen käyttöliittymä,
+ * kuvatiedostot ja metodit main, start, arvotaanKuva ja isOikeinArvattu
+ */
 public class Pelikirja extends Application {
 
     Image houseRollComeback = new Image("C:\\Users\\kaisu\\harjoitustyo\\target\\house roll comeback.png");
@@ -43,37 +47,24 @@ public class Pelikirja extends Application {
     //vboxilla asetellaan otsikko ja tekstikenttä päällekkäin
     VBox vBox = new VBox(arvaaTahan, textField);
 
-
+    /**
+     * @param: indeksi, nimi ja kuva
+     */
     Listatiedot listatiedot = new Listatiedot(1, "houseRollComeback", houseRollComeback);
     String nimi = listatiedot.getNimi();
 
     //boolean-muuttuja vertailuun
     boolean oikeinArvattu = arvaus.equals(nimi);
-    //täällä meillä on taas periytymisongelma,
-    // pitäiskö nää kaikki laittaa samaan luokkaan ettei tätä olis?
 
-    /**
-     * tää pitää yrittää yhdistää listatietojen kanssa: jos textField menee oikein,
-     * halutaan, että näkyy PELIN NIMI vihreällä, jos väärin
-     * halutaan se punaisella
-     * joka tapauksessa "oikein/väärin" palaute on oppimisen kannalta turha
-     */
     //palaute siitä, oliko textField oikein
     Label palaute = new Label("");
-
-
-
-    //eli tähän if (textField != null && textField.equals(listatiedot.getNimi())
-    //{ palaute.setText(getNimi())
-    //palaute.setTextFill(Color.GREEN)
-    //} else {
-    //palaute.setText(getNimi())
-    //palaute.setTextFill(Color.GREEN)
-    //}
 
     //kuvanpaikka
     ImageView kuvanpaikka = new ImageView(houseRollComeback);
 
+    /**
+     * metodi arpoo randomnumeron, jotta saadaan kuvat näkymään satunnaisessa järjestyksessä
+     */
     public void ArvotaanKuva() {
 
         //lasketaan random int 0-17
@@ -113,10 +104,19 @@ public class Pelikirja extends Application {
         }
     }
 
+    /**
+     * main-metodi josta ohjema ajetaan
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * start-metodi, jossa paneeli ja graafinen asettelu sekä tekstikentän toiminto,
+     * jolla verrataan syötettyä nimeä kuvan nimeen
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -140,8 +140,10 @@ public class Pelikirja extends Application {
         textField.setOnAction(e -> {
             String arvaus = textField.getText();
             if (arvaus.equals(listatiedot.getNimi())) {
-                palaute.setText("Oikein!" + listatiedot.getNimi());
+                palaute.setText("Oikein! " + listatiedot.getNimi());
                 palaute.setTextFill(Color.GREEN);
+                palaute.setStyle("-fx-font-size: 30px;");
+                palaute.setPadding(new Insets(50,20,20,50));
             } else {
                 palaute.setText("Väärin!" + listatiedot.getNimi());
                 palaute.setTextFill(Color.RED);
@@ -150,14 +152,16 @@ public class Pelikirja extends Application {
         
     }
 
+    /**
+     * metodi asettaa palatelabeliin syötetyn nimen ja muokkaa labelin ulkoasua
+     * @return oikeinArvattu eli pelin nimi, jos se on oikein arvattu
+     */
     public boolean isOikeinArvattu() {
         palaute.setText(listatiedot.getNimi());
         palaute.setTextFill(Color.GREEN);
         palaute.setStyle("-fx-font-size: 15px;"); // suurenna
         return oikeinArvattu;
         //tallenna tulos tiedostoon myös tähän
-        //joku rakenne millä katsotaan, onko lista käyty kokonaan läpi
-        //jos on niin System.out.println(tiedosto);
     }
 
 
